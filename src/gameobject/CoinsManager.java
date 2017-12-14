@@ -48,7 +48,7 @@ public class CoinsManager {
         if(type == 0) {
             return new Coin(mainCharacter, 750, coin1.getWidth()-10 , coin1.getHeight() -10, coin1);
         } else {
-            return new Coin(mainCharacter, 700, coin2.getWidth()-10 , coin2.getHeight()-10, coin2);
+            return new Coin(mainCharacter, 710, coin2.getWidth()-10 , coin2.getHeight() -10, coin2);
         }
     }
 

@@ -3,6 +3,7 @@ package userinterface;
 import java.applet.Applet;
 import java.applet.AudioClip;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -29,7 +30,12 @@ public class GameScreen extends JPanel implements Runnable, KeyListener {
 	private EnemiesManager enemiesManager;
 	private CoinsManager coinsManager;
 	private Thread thread;
+
+	private Font font;
+
 	private AudioClip runSound;
+	private AudioClip collectCoinSound;
+
 	private boolean isKeyPressed;
 
 	private int gameState = START_GAME_STATE;
@@ -41,6 +47,7 @@ public class GameScreen extends JPanel implements Runnable, KeyListener {
 	public GameScreen() {
 		mainCharacter = new MainCharacter();
 		land = new Land(GameWindow.SCREEN_WIDTH, mainCharacter);
+		font = new Font("Comic Sans MS",Font.PLAIN, 11);
 		mainCharacter.setSpeedX(5);
 		startButtonImage = Resource.getResourceImage("data/Start_button.png");
 		replayButtonImage = Resource.getResourceImage("data/Replay_button.png");
@@ -49,6 +56,7 @@ public class GameScreen extends JPanel implements Runnable, KeyListener {
 		coinsManager = new CoinsManager(mainCharacter);
 		try {
 			runSound = Applet.newAudioClip(new URL("file","","data/Run.wav"));
+			collectCoinSound = Applet.newAudioClip(new URL("file","","data/coinsound.wav"));
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
@@ -71,7 +79,8 @@ public class GameScreen extends JPanel implements Runnable, KeyListener {
 			}
 			coinsManager.update();
 			if(coinsManager.isCollision()) {
-				mainCharacter.score+=2;
+				collectCoinSound.play();
+				mainCharacter.score+=10;
 				coinsManager.reset();
 			}
 		}
@@ -92,8 +101,10 @@ public class GameScreen extends JPanel implements Runnable, KeyListener {
 			land.draw(g);
 			enemiesManager.draw(g);
 			mainCharacter.draw(g);
-			g.setColor(Color.BLACK);
-			g.drawString("HighScore : " + mainCharacter.score, 500, 20);
+			g.setColor(Color.DARK_GRAY);
+			g.setFont(font);
+			g.drawString("YOUR SCORE : " + mainCharacter.score, 475, 20);
+			g.drawString("YOUR HIGHSCORE : " + mainCharacter.highScore,5,20);
 			if (gameState == GAME_OVER_STATE) {
 				g.drawImage(replayButtonImage, 306, 70, null);
 				g.drawImage(gameOverButtonImage, 125, 5, null);
@@ -154,7 +165,7 @@ public class GameScreen extends JPanel implements Runnable, KeyListener {
 			case GAME_PLAYING_STATE:
 				if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 					mainCharacter.jump();
-				} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+				} else if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
 					mainCharacter.down(true);
 				}
 				break;
@@ -176,7 +187,7 @@ public class GameScreen extends JPanel implements Runnable, KeyListener {
 	public void keyReleased(KeyEvent e) {
 		isKeyPressed = false;
 		if (gameState == GAME_PLAYING_STATE) {
-			if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+			if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
 				mainCharacter.down(false);
 			}
 		}
