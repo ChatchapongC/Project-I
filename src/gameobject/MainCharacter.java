@@ -143,8 +143,8 @@ public class MainCharacter {
 		if(isDeath) {
 			state = DEATH;
 			if (score > highScore) {
-				highScore = score;
 				highScoreSound.play();
+				highScore = score;
 				score = 0;
 			}score = 0;
 		}
