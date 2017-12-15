@@ -48,7 +48,7 @@ public class GameScreen extends JPanel implements Runnable, KeyListener {
 		mainCharacter = new MainCharacter();
 		land = new Land(GameWindow.SCREEN_WIDTH, mainCharacter);
 		font = new Font("Comic Sans MS",Font.PLAIN, 11);
-		mainCharacter.setSpeedX(5);
+		mainCharacter.setSpeedX(6);
 		startButtonImage = Resource.getResourceImage("data/Start_button.png");
 		replayButtonImage = Resource.getResourceImage("data/Replay_button.png");
 		gameOverButtonImage = Resource.getResourceImage("data/GameOver.png");
@@ -165,7 +165,7 @@ public class GameScreen extends JPanel implements Runnable, KeyListener {
 			case GAME_PLAYING_STATE:
 				if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 					mainCharacter.jump();
-				} else if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
+				} else if (e.getKeyCode() == KeyEvent.VK_S) {
 					mainCharacter.down(true);
 				}
 				break;
@@ -187,7 +187,7 @@ public class GameScreen extends JPanel implements Runnable, KeyListener {
 	public void keyReleased(KeyEvent e) {
 		isKeyPressed = false;
 		if (gameState == GAME_PLAYING_STATE) {
-			if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
+			if (e.getKeyCode() == KeyEvent.VK_S) {
 				mainCharacter.down(false);
 			}
 		}

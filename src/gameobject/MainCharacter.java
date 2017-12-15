@@ -28,7 +28,7 @@ public class MainCharacter {
 	private Rectangle rectBound;
 	
 	public int score;
-	public int highScore;
+	public int highScore = 0;
 	
 	private int state = NORMAL_RUN;
 	
@@ -39,6 +39,7 @@ public class MainCharacter {
 
 	private AudioClip jumpSound;
 	private AudioClip deadSound;
+	private AudioClip highScoreSound;
 	
 	public MainCharacter() {
 		posX = 50;
@@ -55,6 +56,7 @@ public class MainCharacter {
 		try {
 			jumpSound =  Applet.newAudioClip(new URL("file","","data/jump.wav"));
 			deadSound =  Applet.newAudioClip(new URL("file","","data/Bruh.wav"));
+			highScoreSound =  Applet.newAudioClip(new URL("file","","data/Highscore.wav"));
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
@@ -140,11 +142,11 @@ public class MainCharacter {
 	public void dead(boolean isDeath) {
 		if(isDeath) {
 			state = DEATH;
-			highScore+=score;
-			score = 0 ;
-			if(score > highScore) {
+			if (score > highScore) {
 				highScore = score;
-			}
+				highScoreSound.play();
+				score = 0;
+			}score = 0;
 		}
 		else {
 			state = NORMAL_RUN;
@@ -154,7 +156,6 @@ public class MainCharacter {
 	public void reset() {
 		posY = LAND_POSY;
 		speedX = 6;
-		System.out.println("down");
 	}
 	
 	public void playDeadSound() {
@@ -165,7 +166,6 @@ public class MainCharacter {
 		score += 10;
 		if(score % 100 == 0) {
 			speedX ++;
-			System.out.println("Sfs");
 		}
 	}
 	
