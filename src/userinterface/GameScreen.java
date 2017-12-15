@@ -13,6 +13,7 @@ import java.net.URL;
 
 import javax.swing.JPanel;
 
+import com.sun.org.apache.regexp.internal.RE;
 import gameobject.EnemiesManager;
 import gameobject.CoinsManager;
 import gameobject.Land;
@@ -41,6 +42,7 @@ public class GameScreen extends JPanel implements Runnable, KeyListener {
 	private int gameState = START_GAME_STATE;
 
 	private BufferedImage startButtonImage;
+	private BufferedImage howtoPlay;
 	private BufferedImage gameOverButtonImage;
 	private BufferedImage replayButtonImage;
 
@@ -50,6 +52,7 @@ public class GameScreen extends JPanel implements Runnable, KeyListener {
 		font = new Font("Comic Sans MS",Font.PLAIN, 11);
 		mainCharacter.setSpeedX(6);
 		startButtonImage = Resource.getResourceImage("data/Start_button.png");
+		howtoPlay = Resource.getResourceImage(("data/Howto.png"));
 		replayButtonImage = Resource.getResourceImage("data/Replay_button.png");
 		gameOverButtonImage = Resource.getResourceImage("data/GameOver.png");
 		enemiesManager = new EnemiesManager(mainCharacter);
@@ -94,6 +97,7 @@ public class GameScreen extends JPanel implements Runnable, KeyListener {
 		case START_GAME_STATE:
 			mainCharacter.draw(g);
 			g.drawImage(startButtonImage, 90, 30, null);
+			g.drawImage(howtoPlay,90,0,null);
 			break;
 		case GAME_PLAYING_STATE:
 		case GAME_OVER_STATE:
